@@ -5,6 +5,7 @@ require 'trollop'
 
 opts = Trollop::options do
   opt :export, "Export to CSV"
+  opt :lines, "Number of Lines", default: 25
 end
 
 if opts[:export]
@@ -28,7 +29,7 @@ if opts[:export]
 
     # CSV table body
     # --------------------------------------------------
-    25.times do |i|
+    opts[:lines].times do |i|
       person = Person.new
       export.write "#{person.to_csv}\n"
       puts [
@@ -49,7 +50,7 @@ else
   # Simple to_s
   # --------------------------------------------------
 
-  10.times do |i|
+  opts[:lines].times do |i|
     person = Person.new
     puts person.to_s
   end
