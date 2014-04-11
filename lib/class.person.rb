@@ -78,7 +78,7 @@ class Person
     @position_title = Faker::Name.title
     @exempt_status = %w[ Exempt Non-Exempt ].sample
     @hours_expected_per_year = rand(1000) + 500
-    @hire_date = '' # TODO: refactor Faker::CPG.date_of_birth
+    @hire_date = Faker::CPG.hire_date
 
     @mailing_address_1 = Faker::Address.street_address
     @mailing_address_2 = prob 3, Faker::Address.secondary_address

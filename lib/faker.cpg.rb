@@ -29,12 +29,20 @@ module Faker
         %w[ M F ].sample
       end
 
-      def date_of_birth
+      def date delta=0
         Time.new(
-          Time.now.year - (MIN_AGE + rand(MAX_AGE - MIN_AGE)), # year
+          Time.now.year + delta, # year
           rand(1..12), # month
           rand(1..28) # day
         ).strftime "%m/%d/%y"
+      end
+
+      def date_of_birth
+        date(-(MIN_AGE + rand(MAX_AGE - MIN_AGE)))
+      end
+
+      def hire_date
+        date(-(rand(25)+1))
       end
 
       def prefix gender
