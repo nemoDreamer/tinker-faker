@@ -1,6 +1,11 @@
 require 'faker'
 require_relative 'faker.cpg'
 require_relative 'helpers'
+require_relative 'extensions'
+
+# avoid pescy deprecation warning...
+I18n.enforce_available_locales = false
+
 
 class Person
 
@@ -123,7 +128,13 @@ class Person
   # to String
   # --------------------------------------------------
   def to_s sep=","
-    self.to_a.join sep
+    (@a || self.to_a).join sep
+  end
+
+  # to CSV
+  # --------------------------------------------------
+  def to_csv
+    (@a || self.to_a).to_csv
   end
 
   # to Array
@@ -133,7 +144,7 @@ class Person
     Person::SCHEMA.each do |item|
       output << (self.send(item) || '')
     end
-    output
+    @a = output
   end
 
 end
