@@ -149,7 +149,7 @@ class Person
 
   # to String
   # --------------------------------------------------
-  def to_s sep=" | "
+  def to_s sep="|"
     (@a || self.to_a).join sep
   end
 
