@@ -1,3 +1,7 @@
+# --------------------------------------------------
+# Probabilities
+# --------------------------------------------------
+
 # true on x in 10 chance
 def probability chance=5
   (rand(10)+1) <= chance

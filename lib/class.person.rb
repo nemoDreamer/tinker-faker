@@ -87,7 +87,7 @@ class Person
 
     name_seed = "#{@first_name} #{@last_name} #{Faker::Number.number 3}"
 
-    @position_title = Faker::Name.title
+    @position_title = Faker::CPG.position_title @employment_status
     @exempt_status = Faker::CPG.exempt_status
     @hours_expected_per_year = rand(1000) + 500
     @hire_date = Faker::CPG.hire_date
@@ -113,7 +113,7 @@ class Person
     @work_email = Faker::Internet.safe_email(name_seed)
 
     @health_coverage_source = Faker::CPG.health_coverage_source
-    @health_coverage_level = Faker::CPG.health_coverage_level
+    @health_coverage_level = Faker::CPG.health_coverage_level @health_coverage_source
     @premium_percentage = rand(6)
     @contributes_to_pension = %w[ Yes No ].sample
 

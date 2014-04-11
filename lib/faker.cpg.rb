@@ -32,6 +32,11 @@ module Faker
         F: DataLoader.get_data('female_first_names')
       }
 
+      POSITION_TITLES = {
+        EMPLOYMENT_STATUSES[0] => DataLoader.get_data_lines('clergy_position_titles'),
+        EMPLOYMENT_STATUSES[1] => DataLoader.get_data_lines('lay_position_titles')
+      }
+
       MIN_PASSWORD_LENGTH = 8
       MAX_PASSWORD_LENGTH = 16
       SPECIAL_CHARACTERS = %w[ ! @ # $ % ^ & * ]
@@ -88,6 +93,10 @@ module Faker
         output[0, MAX_PASSWORD_LENGTH]
       end
 
+      def position_title status
+        POSITION_TITLES[status].sample
+      end
+
       def exempt_status
         %w[ Exempt Non-Exempt ].sample
       end
@@ -96,8 +105,8 @@ module Faker
         %w[ InstitutionProvidedPlan SpousePartnerPlan MilitaryPlan Medicare Other None ].sample
       end
 
-      def health_coverage_level
-        %w[ EmployeePlusSpouse EmployeePlusChildren Family ].sample
+      def health_coverage_level source
+        source != 'None' ? %w[ EmployeePlusSpouse EmployeePlusChildren Family ].sample : nil
       end
 
     end
