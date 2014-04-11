@@ -4,6 +4,10 @@ module Faker
   class CPG < Base
     class << self
 
+      # --------------------------------------------------
+      # Constants
+      # --------------------------------------------------
+
       MIN_AGE = 18
       MAX_AGE = 75
 
@@ -20,6 +24,10 @@ module Faker
       MIN_PASSWORD_LENGTH = 8
       MAX_PASSWORD_LENGTH = 16
       SPECIAL_CHARACTERS = %w[ ! @ # $ % ^ & * ]
+
+      # --------------------------------------------------
+      # Generators
+      # --------------------------------------------------
 
       def ssn_or_tax_id
         numerify('###-##-####')

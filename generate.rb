@@ -7,16 +7,29 @@ opts = Trollop::options do
   opt :export, "Export to CSV"
 end
 
-do_export = !!opts[:export]
+if opts[:export]
+  timestamp = Time.now.strftime '%Ymd-%H%M'
 
-timestamp = Time.now.strftime '%Ymd-%H%M'
-export = File.open("output/export-#{timestamp}.csv", 'a') if do_export
+  File.open("output/export-#{timestamp}.csv", 'a') do |export|
 
-25.times do |i|
-  person = Person.new
+    25.times do |i|
+      person = Person.new
+      export.write "#{person.to_csv}\n"
+      puts [
+        person.full_name.ljust(32),
+        person.username.ljust(32),
+        person.password
+      ].join ' '
+    end
 
-  export.write "#{person.to_csv}\n" if do_export
-  puts person.to_s
+  end
+
+else
+
+  10.times do |i|
+    person = Person.new
+    puts person.to_s
+  end
+
 end
 
-export.close if do_export

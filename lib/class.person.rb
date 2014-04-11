@@ -59,12 +59,18 @@ class Person
 
   ]
 
+
   # Initializer
   # --------------------------------------------------
   def initialize
-
     self.class.fields
+    populate
+  end
 
+
+  # Populate
+  # --------------------------------------------------
+  def populate
     @ssn_or_tax_id = Faker::CPG.ssn_or_tax_id
     @date_of_birth = Faker::CPG.date_of_birth
 
@@ -76,7 +82,7 @@ class Person
     @first_name = Faker::CPG.first_name @gender
     @middle_name = prob 5, Faker::CPG.first_name(@gender)
     @last_name = Faker::Name.last_name
-    @suffix = Faker::Name.suffix
+    @suffix = prob 2, Faker::Name.suffix
 
     name_seed = "#{@first_name} #{@last_name} #{Faker::Number.number 3}"
 
@@ -115,6 +121,7 @@ class Person
 
   end
 
+
   # Magic accessors
   # --------------------------------------------------
   class << self
@@ -125,11 +132,26 @@ class Person
     end
   end
 
+
+  # Full Name
+  # --------------------------------------------------
+  def full_name
+    [
+      designation_salutation,
+      first_name,
+      middle_name,
+      last_name,
+      suffix
+    ].compact.join ' '
+  end
+
+
   # to String
   # --------------------------------------------------
-  def to_s sep=","
+  def to_s sep=" | "
     (@a || self.to_a).join sep
   end
+
 
   # to CSV
   # --------------------------------------------------
@@ -137,12 +159,13 @@ class Person
     (@a || self.to_a).to_csv
   end
 
+
   # to Array
   # --------------------------------------------------
   def to_a
     output = []
     Person::SCHEMA.each do |item|
-      output << (self.send(item) || '')
+      output << self.send(item)
     end
     @a = output
   end
