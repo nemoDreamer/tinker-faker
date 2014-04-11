@@ -1,5 +1,8 @@
 require 'faker'
 
+require_relative 'module.data_loader'
+include DataLoader
+
 module Faker
   class CPG < Base
     class << self
@@ -11,43 +14,28 @@ module Faker
       MIN_AGE = 18
       MAX_AGE = 75
 
+      EMPLOYMENT_STATUSES = %w[ Clergy Lay ]
+
       PREFIXES = {
-        M: %w[ Mr. Dr. ],
-        F: %w[ Mrs. Ms. Miss Dr. ],
-        C: [
-          'The Reverend / Father',
-          'The Reverend / Mother',
-          'The Reverend / Pastor',
-          'The Reverend / Chaplain',
-          'The Reverend / Mr.',
-          'The Reverend / Deacon',
-          'The Reverend / Ms.',
-          'The Reverend / Mrs.',
-          'The Reverend / Miss',
-          'The Reverend Dr.',
-          'Brother',
-          'Sister',
-          'The Most Reverend',
-          'The Most Reverend Dr.',
-          'The Reverend Canon',
-          'The Reverend Canon Dr.',
-          'The Right Reverend',
-          'The Right Reverend Dr.',
-          'The Venerable',
-          'The Venerable Dr.',
-          'The Very Reverend',
-          'The Very Reverend Dr.'
-        ]
+        EMPLOYMENT_STATUSES[0] => {
+          M: DataLoader.get_data_lines('male_clergy_designations'),
+          F: DataLoader.get_data_lines('female_clergy_designations')
+        },
+        EMPLOYMENT_STATUSES[1] => {
+          M: %w[ Mr. Dr. ],
+          F: %w[ Mrs. Ms. Miss Dr. ]
+        }
       }
 
       FIRST_NAMES = {
-        M: File.read(File.dirname(__FILE__) + '/data/male_first_names.txt').split(/\s+/),
-        F: File.read(File.dirname(__FILE__) + '/data/female_first_names.txt').split(/\s+/)
+        M: DataLoader.get_data('male_first_names'),
+        F: DataLoader.get_data('female_first_names')
       }
 
       MIN_PASSWORD_LENGTH = 8
       MAX_PASSWORD_LENGTH = 16
       SPECIAL_CHARACTERS = %w[ ! @ # $ % ^ & * ]
+
 
       # --------------------------------------------------
       # Generators
@@ -59,6 +47,10 @@ module Faker
 
       def gender
         %w[ M F ].sample
+      end
+
+      def employment_status
+        EMPLOYMENT_STATUSES.sample
       end
 
       def date delta=0
@@ -77,9 +69,8 @@ module Faker
         date(-(rand(25)+1))
       end
 
-      def prefix gender, status
-        key = status == 'Clergy' ? 'C' : gender
-        PREFIXES[key.to_sym].sample
+      def prefix status, gender
+        PREFIXES[status][gender.to_sym].sample
       end
 
       def first_name gender
@@ -95,6 +86,18 @@ module Faker
         output.insert(rand(MIN_PASSWORD_LENGTH)+1, SPECIAL_CHARACTERS.sample)
         # trim
         output[0, MAX_PASSWORD_LENGTH]
+      end
+
+      def exempt_status
+        %w[ Exempt Non-Exempt ].sample
+      end
+
+      def health_coverage_source
+        %w[ InstitutionProvidedPlan SpousePartnerPlan MilitaryPlan Medicare Other None ].sample
+      end
+
+      def health_coverage_level
+        %w[ EmployeePlusSpouse EmployeePlusChildren Family ].sample
       end
 
     end

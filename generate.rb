@@ -32,9 +32,9 @@ if opts[:export]
       person = Person.new
       export.write "#{person.to_csv}\n"
       puts [
-        person.full_name.ljust(32),
-        person.username.ljust(32),
-        person.password
+        person.full_name.ljust(64),
+        person.ccis_username.ljust(32),
+        person.ccis_password
       ].join ' '
     end
 

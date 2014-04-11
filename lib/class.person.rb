@@ -77,9 +77,9 @@ class Person
     @date_of_birth = Faker::CPG.date_of_birth
 
     @gender = Faker::CPG.gender
-    @employment_status = %w[ Lay Clergy ].sample
+    @employment_status = Faker::CPG.employment_status
 
-    @designation_salutation = Faker::CPG.prefix @gender, @employment_status
+    @designation_salutation = Faker::CPG.prefix @employment_status, @gender
     @first_name = Faker::CPG.first_name(@gender)
     @middle_name = prob 5, Faker::CPG.first_name(@gender)
     @last_name = Faker::Name.last_name
@@ -88,7 +88,7 @@ class Person
     name_seed = "#{@first_name} #{@last_name} #{Faker::Number.number 3}"
 
     @position_title = Faker::Name.title
-    @exempt_status = %w[ Exempt Non-Exempt ].sample
+    @exempt_status = Faker::CPG.exempt_status
     @hours_expected_per_year = rand(1000) + 500
     @hire_date = Faker::CPG.hire_date
 
@@ -112,8 +112,8 @@ class Person
     @personal_email = Faker::Internet.safe_email(name_seed)
     @work_email = Faker::Internet.safe_email(name_seed)
 
-    @health_coverage_source = %w[ ? MilitaryPlan ].sample
-    @health_coverage_level = %w[ ? EmployeePlusSpouse ].sample
+    @health_coverage_source = Faker::CPG.health_coverage_source
+    @health_coverage_level = Faker::CPG.health_coverage_level
     @premium_percentage = rand(6)
     @contributes_to_pension = %w[ Yes No ].sample
 
