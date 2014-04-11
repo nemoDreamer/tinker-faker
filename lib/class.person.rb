@@ -26,8 +26,8 @@ class Person
     last_name
     suffix
 
-    username
-    password
+    ccis_username
+    ccis_password
 
     employment_status
 
@@ -38,19 +38,21 @@ class Person
 
     mailing_address_1
     mailing_address_2
-    city
-    state
-    postal_code
-    country
-    phone
-    personal_email
-    work_email
+    mailing_city
+    mailing_state
+    mailing_postal_code
+    mailing_country
+
     home_address_1
     home_address_2
-    city
-    state
-    postal_code
-    country
+    home_city
+    home_state
+    home_postal_code
+    home_country
+
+    phone_number
+    personal_email
+    work_email
 
     health_coverage_source
     health_coverage_level
@@ -107,7 +109,7 @@ class Person
       @home_country = Faker::Address.country
     end
 
-    @phone = Faker::PhoneNumber.phone_number
+    @phone_number = Faker::PhoneNumber.phone_number
     @personal_email = Faker::Internet.safe_email(name_seed)
     @work_email = Faker::Internet.safe_email(name_seed)
 
@@ -116,8 +118,8 @@ class Person
     @premium_percentage = rand(6)
     @contributes_to_pension = %w[ Yes No ].sample
 
-    @username = Faker::Internet.user_name(name_seed)
-    @password = Faker::CPG.password
+    @ccis_username = Faker::Internet.user_name(name_seed)
+    @ccis_password = Faker::CPG.password
 
   end
 
