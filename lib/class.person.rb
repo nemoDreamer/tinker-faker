@@ -79,9 +79,8 @@ class Person
     @gender = Faker::CPG.gender
     @employment_status = %w[ Lay Clergy ].sample
 
-    # TODO: make lay/clergy specific
-    @designation_salutation = Faker::CPG.prefix @gender
-    @first_name = Faker::CPG.first_name @gender
+    @designation_salutation = Faker::CPG.prefix @gender, @employment_status
+    @first_name = Faker::CPG.first_name(@gender)
     @middle_name = prob 5, Faker::CPG.first_name(@gender)
     @last_name = Faker::Name.last_name
     @suffix = prob 2, Faker::Name.suffix

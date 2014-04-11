@@ -12,8 +12,32 @@ module Faker
       MAX_AGE = 75
 
       PREFIXES = {
-        M: %w[ Mr. Dr. Sir ],
-        F: %w[ Mrs. Ms. Miss Dr. Lady ]
+        M: %w[ Mr. Dr. ],
+        F: %w[ Mrs. Ms. Miss Dr. ],
+        C: [
+          'The Reverend / Father',
+          'The Reverend / Mother',
+          'The Reverend / Pastor',
+          'The Reverend / Chaplain',
+          'The Reverend / Mr.',
+          'The Reverend / Deacon',
+          'The Reverend / Ms.',
+          'The Reverend / Mrs.',
+          'The Reverend / Miss',
+          'The Reverend Dr.',
+          'Brother',
+          'Sister',
+          'The Most Reverend',
+          'The Most Reverend Dr.',
+          'The Reverend Canon',
+          'The Reverend Canon Dr.',
+          'The Right Reverend',
+          'The Right Reverend Dr.',
+          'The Venerable',
+          'The Venerable Dr.',
+          'The Very Reverend',
+          'The Very Reverend Dr.'
+        ]
       }
 
       FIRST_NAMES = {
@@ -53,8 +77,9 @@ module Faker
         date(-(rand(25)+1))
       end
 
-      def prefix gender
-        PREFIXES[gender.to_sym].sample
+      def prefix gender, status
+        key = status == 'Clergy' ? 'C' : gender
+        PREFIXES[key.to_sym].sample
       end
 
       def first_name gender
