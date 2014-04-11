@@ -85,7 +85,8 @@ class Person
     @last_name = Faker::Name.last_name
     @suffix = prob 2, Faker::Name.suffix
 
-    name_seed = "#{@first_name} #{@last_name} #{Faker::Number.number 3}"
+    personal_seed = "#{@first_name} #{@last_name} #{Faker::Number.number 3}"
+    work_seed = "#{@first_name[0]} #{@last_name}"
 
     @position_title = Faker::CPG.position_title @employment_status
     @exempt_status = Faker::CPG.exempt_status
@@ -109,15 +110,15 @@ class Person
     end
 
     @phone_number = Faker::PhoneNumber.phone_number
-    @personal_email = Faker::Internet.safe_email(name_seed)
-    @work_email = Faker::Internet.safe_email(name_seed)
+    @personal_email = Faker::Internet.safe_email(personal_seed)
+    @work_email = Faker::Internet.safe_email(work_seed)
 
     @health_coverage_source = Faker::CPG.health_coverage_source
     @health_coverage_level = Faker::CPG.health_coverage_level @health_coverage_source
     @premium_percentage = Faker::CPG.premium_percentage
     @contributes_to_pension = Faker::CPG.yes_no
 
-    @ccis_username = Faker::Internet.user_name(name_seed)
+    @ccis_username = Faker::Internet.user_name(personal_seed)
     @ccis_password = Faker::CPG.password
 
   end
