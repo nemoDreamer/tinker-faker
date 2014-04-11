@@ -122,12 +122,18 @@ class Person
 
   # to String
   # --------------------------------------------------
-  def to_s sep=" "
+  def to_s sep=","
+    self.to_a.join sep
+  end
+
+  # to Array
+  # --------------------------------------------------
+  def to_a
     output = []
     Person::SCHEMA.each do |item|
-      output << "#{self.send(item)}".ljust(10)
+      output << (self.send(item) || '')
     end
-    output.join sep
+    output
   end
 
 end
