@@ -97,7 +97,7 @@ class Person
     @mailing_city = Faker::Address.city
     @mailing_state = Faker::Address.state
     @mailing_postal_code = Faker::Address.zip_code
-    @mailing_country = Faker::Address.country
+    @mailing_country = Faker::CPG.country
 
     if probability 3
       @home_address_1 = Faker::Address.street_address
@@ -105,7 +105,7 @@ class Person
       @home_city = Faker::Address.city
       @home_state = Faker::Address.state
       @home_postal_code = Faker::Address.zip_code
-      @home_country = Faker::Address.country
+      @home_country = Faker::CPG.country
     end
 
     @phone_number = Faker::PhoneNumber.phone_number
@@ -114,8 +114,8 @@ class Person
 
     @health_coverage_source = Faker::CPG.health_coverage_source
     @health_coverage_level = Faker::CPG.health_coverage_level @health_coverage_source
-    @premium_percentage = rand(6)
-    @contributes_to_pension = %w[ Yes No ].sample
+    @premium_percentage = Faker::CPG.premium_percentage
+    @contributes_to_pension = Faker::CPG.yes_no
 
     @ccis_username = Faker::Internet.user_name(name_seed)
     @ccis_password = Faker::CPG.password

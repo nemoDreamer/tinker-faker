@@ -93,6 +93,10 @@ module Faker
         output[0, MAX_PASSWORD_LENGTH]
       end
 
+      def country
+        'US'
+      end
+
       def position_title status
         POSITION_TITLES[status].sample
       end
@@ -107,6 +111,14 @@ module Faker
 
       def health_coverage_level source
         source != 'None' ? %w[ EmployeePlusSpouse EmployeePlusChildren Family ].sample : nil
+      end
+
+      def premium_percentage
+        rand(6)
+      end
+
+      def yes_no
+        %w[ Yes No ].sample
       end
 
     end
