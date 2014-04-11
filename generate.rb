@@ -8,6 +8,8 @@ opts = Trollop::options do
   opt :lines, "Number of Lines", default: 25
 end
 
+track = Time.new
+
 if opts[:export]
 
   # --------------------------------------------------
@@ -57,3 +59,4 @@ else
 
 end
 
+puts "#{opts[:lines]} rows, executed in #{Time.now - track} seconds."
