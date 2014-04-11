@@ -8,10 +8,26 @@ opts = Trollop::options do
 end
 
 if opts[:export]
+
+  # --------------------------------------------------
+  # CSV Export
+  # --------------------------------------------------
+
+  folder = 'output'
   timestamp = Time.now.strftime '%Ymd-%H%M'
+  file_name = "export-#{timestamp}.csv"
 
-  File.open("output/export-#{timestamp}.csv", 'a') do |export|
+  Dir.chdir(folder)
 
+  File.open(file_name, 'a') do |export|
+
+    # CSV header row
+    # --------------------------------------------------
+    export.write "#{Person::SCHEMA.to_csv}\n"
+
+
+    # CSV table body
+    # --------------------------------------------------
     25.times do |i|
       person = Person.new
       export.write "#{person.to_csv}\n"
@@ -24,7 +40,14 @@ if opts[:export]
 
   end
 
+  # keep latest for quick cat'ing
+  IO.copy_stream(file_name, 'latest.csv')
+
 else
+
+  # --------------------------------------------------
+  # Simple to_s
+  # --------------------------------------------------
 
   10.times do |i|
     person = Person.new
